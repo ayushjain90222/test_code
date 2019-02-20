@@ -44,3 +44,6 @@ class PhoneNumberToWords
 end
 final_words = PhoneNumberToWords.new().number_to_letters("6686787825")
 print final_words
+
+final_words = PhoneNumberToWords.new().number_to_letters("2282668687")
+print final_words
