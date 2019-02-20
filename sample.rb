@@ -9,42 +9,33 @@ File.foreach( file_path ) do |word|
 	end
 end
 
-hash_new = Hash.new{|h,k| h[k] = [] }
-count = 0
-for i in (0...hash.keys.length) do
+final_words = []
+for i in (0..hash.keys.length) do
 	for j in (i+1..hash.keys.length) do
 		if hash.keys[i].to_s + hash.keys[j].to_s == digits
-		hash_new[count].push(hash.keys[i].to_s)
-		hash_new[count].push(hash.keys[j].to_s)
-		count = count + 1
+			first_array = []
+			second_array = []
+			first_array = hash[hash.keys[i].to_s]
+			second_array = hash[hash.keys[j].to_s]
+			if !first_array.empty? and !second_array.empty?
+				first_array.each{|x|
+					second_array.each{|y|
+					array = []
+					array.push(x)
+					array.push(y)
+					final_words.push(array)
+					}
+				}
+			elsif !first_array.empty? and second_array.empty?
+				first_array.each{|x|
+				final_words.push(x)
+				}
+			elsif first_array.empty? and !second_array.empty?
+				second_array.each{|x|
+				final_words.push(x)
+				}
+			end
 		end
 	end
 end
-
-final_words = []
-hash_new.values.each{|x|
-	first_array = []
-	second_array = []
-	first_array = hash[x.first]
-	second_array = hash[x.last]
-if !first_array.empty? and !second_array.empty?
-	first_array.each{|x|
-		second_array.each{|y|
-		array = []
-		array.push(x)
-		array.push(y)
-		final_words.push(array)
-		}
-}
-elsif !first_array.empty? and second_array.empty?
-	first_array.each{|x|
-		final_words.push(x)
-	}
-elsif first_array.empty? and !second_array.empty?
-	second_array.each{|x|
-		final_words.push(x)
-	}
-end
-}
-
-puts final_words
+print final_words.uniq
