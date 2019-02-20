@@ -3,10 +3,10 @@ characters = {"a" => "2","b" => "2","c" => "2","d" => "3", "e" => "3","f" => "3"
 digits = "6686787825"
 file_path = '/home/tech/Documents/dictionary.txt'
 File.foreach( file_path ) do |word|
-variable = word.chop.to_s.downcase
-if variable.length >= 3 and digits.include? (variable.chars.map{|x| characters[x]}.join(""))
-hash[variable.chars.map{|x| characters[x]}.join("")].push(variable)  
-end
+	variable = word.chop.to_s.downcase
+	if variable.length >= 3 and digits.include? (variable.chars.map{|x| characters[x]}.join(""))
+		hash[variable.chars.map{|x| characters[x]}.join("")].push(variable)  
+	end
 end
 
 hash_new = Hash.new{|h,k| h[k] = [] }
@@ -20,4 +20,31 @@ for i in (0...hash.keys.length) do
 		end
 	end
 end
- 
+
+final_words = []
+hash_new.values.each{|x|
+	first_array = []
+	second_array = []
+	first_array = hash[x.first]
+	second_array = hash[x.last]
+if !first_array.empty? and !second_array.empty?
+	first_array.each{|x|
+		second_array.each{|y|
+		array = []
+		array.push(x)
+		array.push(y)
+		final_words.push(array)
+		}
+}
+elsif !first_array.empty? and second_array.empty?
+	first_array.each{|x|
+		final_words.push(x)
+	}
+elsif first_array.empty? and !second_array.empty?
+	second_array.each{|x|
+		final_words.push(x)
+	}
+end
+}
+
+puts final_words
